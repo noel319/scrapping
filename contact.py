@@ -20,7 +20,7 @@ def scrape_school_details(url):
     except:
         print(f"Timeout waiting for contact section on {url}")
         return None
-
+    schools = []
     try:
         # Extract school address
         address_elements = driver.find_elements(By.CSS_SELECTOR, ".contact > .contact-row:first-of-type span")
@@ -40,8 +40,8 @@ def scrape_school_details(url):
             elif element.text != "Facebook page":
                 phone = element.text
         driver.quit()
-        return [url, address, school_leader, phone, email, website_url]
-
+        schools.append((url, address, school_leader, phone, email, website_url))
+        return schools
     except Exception as e:
         print(f"Error extracting data from {url}: {e}")
         driver.quit()
